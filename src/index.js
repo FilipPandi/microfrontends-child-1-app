@@ -1,21 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import * as ReactDOMClient from 'react-dom/client';
 
-window.renderChild1 = (containerId, history) => {
-    console.log(containerId);
+let root = null;
+let container = null;
+window.renderChild1 = (containerId) => {
+    container = document.getElementById(containerId);
+    root = ReactDOMClient.createRoot(container);
 
-    ReactDOM.render(
-        <App history={history}/>,
-        document.getElementById(containerId),
-    );
+    root.render(<App/>);
 };
 
-window.unmountChild1 = containerId => {
-    ReactDOM.unmountComponentAtNode(document.getElementById(containerId));
+window.unmountChild1 = () => {
+    root.unmount(container);
 };
 
 if (!document.getElementById('Child1-container')) {
-    ReactDOM.render(<App/>, document.getElementById('root'));
+    const container = document.getElementById('root');
+    const root = ReactDOMClient.createRoot(container);
+    root.render(<App/>);
 }
